@@ -49,7 +49,7 @@ class ProgramDetailsScreen extends StatelessWidget {
                 vertical: 6.0,
               ),
               decoration: BoxDecoration(
-                color: Colors.green.shade100,
+                color: colorScheme.tertiaryContainer,
                 borderRadius: ExRadii.borderRadiusFull,
               ),
               child: Row(
@@ -58,13 +58,13 @@ class ProgramDetailsScreen extends StatelessWidget {
                   Icon(
                     Icons.local_fire_department_outlined,
                     size: 16,
-                    color: Colors.green.shade800,
+                    color: colorScheme.onTertiaryContainer,
                   ),
                   const SizedBox(width: ExSpacing.xs),
                   Text(
                     'TRENDING COURSE',
                     style: textTheme.labelSmall?.copyWith(
-                      color: Colors.green.shade800,
+                      color: colorScheme.onTertiaryContainer,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 0.5,
                     ),
