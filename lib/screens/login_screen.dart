@@ -66,6 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
   // returns a Future — no manual isLoading state needed.
   Future<void> _handleLogin() async {
     if (!_formKey.currentState!.validate()) return;
+    FocusManager.instance.primaryFocus?.unfocus();
     await Future.delayed(const Duration(milliseconds: 600)); // simulated auth
     if (!mounted) return;
     Navigator.pushNamedAndRemoveUntil(
@@ -150,6 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 labelText: 'Email Address',
                 hintText: 'Enter your email',
                 keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
                 prefixIcon: const Icon(Icons.email_outlined),
                 validator: _validateEmail,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -163,6 +165,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 labelText: 'Password',
                 hintText: 'Enter your password',
                 obscureText: _obscurePassword,
+                textInputAction: TextInputAction.done,
+                onFieldSubmitted: (_) => _handleLogin(),
                 prefixIcon: const Icon(Icons.lock_outline),
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -305,6 +309,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Future<void> _handleSignUp() async {
     if (!_formKey.currentState!.validate()) return;
+    FocusManager.instance.primaryFocus?.unfocus();
     await Future.delayed(const Duration(milliseconds: 800)); // simulated
     if (!mounted) return;
     Navigator.pushNamedAndRemoveUntil(
@@ -508,26 +513,33 @@ class _GoogleSignInDialogState extends State<_GoogleSignInDialog> {
                           ),
                         ),
                         const SizedBox(width: 8),
-                        const Text(
+                        Text(
                           'Sign in with Google',
-                          style:
-                              TextStyle(fontSize: 16, color: Colors.black54),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurfaceVariant,
+                          ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 20),
-                    const Text(
+                    Text(
                       'Choose an account',
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w400,
-                        color: Colors.black87,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Text(
+                    Text(
                       'to continue to Excelerate',
-                      style: TextStyle(fontSize: 14, color: Colors.black54),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     _AccountTile(
@@ -563,14 +575,19 @@ class _SigningInProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    return SizedBox(
       height: 140,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(),
-          SizedBox(height: 16),
-          Text('Signing in…', style: TextStyle(color: Colors.black54)),
+          const CircularProgressIndicator(),
+          const SizedBox(height: 16),
+          Text(
+            'Signing in…',
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+          ),
         ],
       ),
     );
@@ -610,12 +627,20 @@ class _AccountTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(name, style: const TextStyle(fontSize: 14)),
+                  Text(
+                    name,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
                   if (email != null)
                     Text(
                       email!,
-                      style: const TextStyle(
-                          fontSize: 12, color: Colors.black54),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
                     ),
                 ],
               ),
